@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {BoardControllerService} from "../api/services/board-controller.service";
 import {BoardWithId} from "../api/models/board-with-id";
 
@@ -9,21 +9,26 @@ import {BoardWithId} from "../api/models/board-with-id";
 })
 export class BoardsListComponent {
 
+  @Output() viewBoard= new EventEmitter<BoardWithId>();
   displayedColumns = ['id', 'name', 'board', 'actions'];
   dataSource: any = [];
 
   constructor(public boardControllerService: BoardControllerService) {
+    this.reload();
+  }
+
+  private reload() {
     this.boardControllerService.getBoards()
       .subscribe(c => {
         this.dataSource = c;
       });
   }
 
-  view(client: BoardWithId) {
-
+  view(board: BoardWithId) {
+    this.viewBoard.emit(board);
   }
 
-  remove(client: BoardWithId) {
-
+  remove(board: BoardWithId) {
+    this.boardControllerService.deleteBoard(board.id).subscribe();
   }
 }

@@ -10,11 +10,15 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {BoardsListComponent} from "./boards-list/boards-list.component";
 import {MatTableModule} from "@angular/material/table";
 import {MatIconModule} from "@angular/material/icon";
+import {BoardComponent} from './board/board.component';
+import {MatGridListModule} from "@angular/material/grid-list";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
     AppComponent,
     BoardsListComponent,
+    BoardComponent,
   ],
   imports: [
     BrowserModule,
@@ -25,6 +29,8 @@ import {MatIconModule} from "@angular/material/icon";
     MatTabsModule,
     MatTableModule,
     MatIconModule,
+    MatGridListModule,
+    MatButtonModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

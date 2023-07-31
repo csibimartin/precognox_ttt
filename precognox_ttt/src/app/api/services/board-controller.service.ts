@@ -4,7 +4,6 @@ import {HttpClient, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {catchError, Observable, throwError} from 'rxjs';
 import {Board} from "../models/board";
-import {BoardWithId} from "../models/board-with-id";
 
 @Injectable({providedIn: 'root'})
 export class BoardControllerService {
@@ -28,7 +27,7 @@ export class BoardControllerService {
     return this.http.post(API_URL, data).pipe(catchError(this.error));
   }
 
-  updateBoard(id: number, data: BoardWithId): Observable<any> {
+  updateBoard(id: number, data: Board): Observable<any> {
     let API_URL = `${this.apiUrl}/${id}`;
     return this.http
       .patch(API_URL, data, {headers: this.headers})

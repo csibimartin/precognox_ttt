@@ -1,0 +1,15 @@
+<h1>Current Player: {{ player }} </h1>
+
+<button mat-button style="color: red" (click)="newGame()">Start new Game</button>
+<button mat-button style="color: green" (click)="save()">Save game</button>
+
+<main>
+  <mat-grid-list [cols]="size" [rowHeight]="tileHeight">
+    <mat-grid-tile
+      *ngFor="let tile of board.board.split(''); let i = index"
+      [style.background]="tile === '1' ? 'lightblue' : (tile === '2' ? 'green' : 'grey')"
+      (click)="move(i)">
+      {{tile === '1' ? 'X' : (tile === '2' ? 'O' : '')}}
+    </mat-grid-tile>
+  </mat-grid-list>
+</main>
