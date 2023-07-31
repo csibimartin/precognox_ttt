@@ -4,15 +4,13 @@
 
 <ng-container>
   <form [formGroup]="fg">
-    <mat-card>
-      <mat-form-field floatLabel="always">
-        <label>Board name</label>
-        <input matInput id="name" type="text" formControlName="name">
-      </mat-form-field>
-      <div *ngIf="fg.get('name')!.errors?.['required']" style="color: red">
+    <mat-form-field floatLabel="always">
+      <label>Board name</label>
+      <input matInput id="name" type="text" formControlName="name">
+      <div *ngIf="fg.get('name')!.errors?.['required']" style="color: red; font-size: 10px">
         This field is required.
       </div>
-    </mat-card>
+    </mat-form-field>
   </form>
 </ng-container>
 
