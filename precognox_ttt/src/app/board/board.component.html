@@ -1,6 +1,21 @@
 <h1 *ngIf="board.id">Board ID: {{ board.id }} </h1>
 <h1>Current Player: {{ player === '1' ? 'X' : 'O' }} </h1>
 
+
+<ng-container>
+  <form [formGroup]="fg">
+    <mat-card>
+      <mat-form-field floatLabel="always">
+        <label>Board name</label>
+        <input matInput id="name" type="text" formControlName="name">
+      </mat-form-field>
+      <div *ngIf="fg.get('name')!.errors?.['required']" style="color: red">
+        This field is required.
+      </div>
+    </mat-card>
+  </form>
+</ng-container>
+
 <button mat-button style="color: red" (click)="newGame()">Start new Game</button>
 <button mat-button style="color: green" (click)="save()">Save game</button>
 

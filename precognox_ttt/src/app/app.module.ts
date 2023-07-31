@@ -13,6 +13,10 @@ import {MatIconModule} from "@angular/material/icon";
 import {BoardComponent} from './board/board.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 import {MatButtonModule} from "@angular/material/button";
+import {ReactiveFormsModule} from "@angular/forms";
+import {MatCardModule} from "@angular/material/card";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
 
 @NgModule({
   declarations: [
@@ -31,6 +35,10 @@ import {MatButtonModule} from "@angular/material/button";
     MatIconModule,
     MatGridListModule,
     MatButtonModule,
+    ReactiveFormsModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatInputModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

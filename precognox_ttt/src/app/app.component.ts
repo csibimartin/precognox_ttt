@@ -11,7 +11,7 @@ export class AppComponent {
   board: Board = {
     id: undefined,
     board: "000000000",
-    name: '' + Math.random()
+    name: undefined
   };
 
   onBoardSelected(event: Board) {

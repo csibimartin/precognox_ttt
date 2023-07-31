@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {BoardControllerService} from "../api/services/board-controller.service";
-import {Board} from "../api/models/board";
+import {Board, createFormGroup} from "../api/models/board";
 
 @Component({
   selector: 'app-board',
@@ -12,10 +12,11 @@ export class BoardComponent implements OnInit {
   _board: Board = {
     id: undefined,
     board: "000000000",
-    name: '' + Math.random()
+    name: undefined
   };
   isOneNext = true;
   winner?: string;
+  readonly fg = createFormGroup();
 
   constructor(private boardControllerService: BoardControllerService) {
   }
@@ -98,25 +99,39 @@ export class BoardComponent implements OnInit {
   }
 
   save() {
+    if (this.fg.invalid || !this.fg.get('name') || !this.fg.get('name')?.value) {
+      return;
+    }
+    this.board.name = this.fg.get('name')!.value as string;
     if (this.board.id) {
       this.boardControllerService.updateBoard(this.board.id, this.board)
-        .subscribe(value => this.board = value);
+        .subscribe(value => {
+          this.board = value;
+          window.alert('Saved!');
+        });
     } else {
       this.boardControllerService.createBoard(this.board)
-        .subscribe(value => this.board = value);
+        .subscribe(value => {
+          this.board = value;
+          window.alert('Saved!');
+        });
     }
   }
 
   private onBoardChanged(_board: Board) {
-    this.calculateNext();
+    this.calculateNext(_board);
     this.calculateWinner();
     this.checkStepsLeft();
+    if (_board.name) {
+      this.fg.get('name')?.setValue(_board.name);
+    }
   }
 
-  private calculateNext() {
+  private calculateNext(board: Board) {
     let ones = 0;
     let twos = 0;
-    for (let x in this.board.board.split('')) {
+    let squares = board.board.split('');
+    for (let x of squares) {
       if (x === '1') {
         ones++;
       } else if (x === '2') {
