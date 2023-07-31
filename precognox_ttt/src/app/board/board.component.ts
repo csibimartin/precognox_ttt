@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {BoardControllerService} from "../api/services/board-controller.service";
 import {Board, createFormGroup} from "../api/models/board";
+import {OpponentControllerService} from "../api/services/opponent-controller.service";
 
 @Component({
   selector: 'app-board',
@@ -17,8 +18,10 @@ export class BoardComponent implements OnInit {
   isOneNext = true;
   winner?: string;
   readonly fg = createFormGroup();
+  aiOn = false;
 
-  constructor(private boardControllerService: BoardControllerService) {
+  constructor(private boardControllerService: BoardControllerService,
+              private opponentControllerService: OpponentControllerService) {
   }
 
   ngOnInit() {
@@ -67,6 +70,14 @@ export class BoardComponent implements OnInit {
     }
     this.calculateWinner();
     this.checkStepsLeft();
+
+    if (this.isOneNext && this.aiOn) {
+      this.opponentControllerService.getOpponentMove('1', this.board.board)
+        .subscribe(value => {
+          this.board.board = value.board;
+          this.isOneNext = false;
+        })
+    }
   }
 
   private checkStepsLeft() {

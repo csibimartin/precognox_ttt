@@ -1,6 +1,12 @@
 <h1 *ngIf="board.id">Board ID: {{ board.id }} </h1>
 <h1>Current Player: {{ player === '1' ? 'X' : 'O' }} </h1>
-
+<div>
+  <label>AI (doesn't work)</label>
+  <mat-radio-group [ngModel]="aiOn">
+    <mat-radio-button value="true">On</mat-radio-button>
+    <mat-radio-button value="false">Off</mat-radio-button>
+  </mat-radio-group>
+</div>
 
 <ng-container>
   <form [formGroup]="fg">
