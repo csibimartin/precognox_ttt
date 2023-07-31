@@ -14,8 +14,12 @@ export class BoardControllerService {
   constructor(private http: HttpClient) {
   }
 
-  getBoards() {
-    return this.http.get(`${this.apiUrl}`);
+  getBoards(name?: string) {
+    let options = {};
+    if (name) {
+      options = {params: {name: name}};
+    }
+    return this.http.get(`${this.apiUrl}`, options);
   }
 
   getBoard(id: number) {

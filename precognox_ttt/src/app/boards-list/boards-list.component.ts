@@ -13,6 +13,7 @@ export class BoardsListComponent {
   @Output() viewBoard = new EventEmitter<Board>();
   displayedColumns = ['id', 'name', 'board', 'actions'];
   dataSource: any = [];
+
   @Input() set activeTab(tab: number) {
     this.reload();
   }
@@ -21,8 +22,8 @@ export class BoardsListComponent {
     this.reload();
   }
 
-  reload() {
-    this.boardControllerService.getBoards()
+  reload(name?: any) {
+    this.boardControllerService.getBoards(name)
       .subscribe(c => {
         this.dataSource = c;
       });
@@ -34,5 +35,9 @@ export class BoardsListComponent {
 
   remove(board: BoardWithId) {
     this.boardControllerService.deleteBoard(board.id).subscribe(() => this.reload());
+  }
+
+  nameChanged(target: any) {
+    this.reload(target.value);
   }
 }

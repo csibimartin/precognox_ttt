@@ -2,6 +2,10 @@
   <button class="button-add-row" mat-button (click)="reload()">
     <mat-icon>refresh</mat-icon>
   </button>
+  <mat-form-field>
+    <label for="name">Board name</label>
+    <input matInput id="name" type="text"  (input)="nameChanged($event.target)">
+  </mat-form-field>
 </article>
 <table mat-table [dataSource]="dataSource">
   <ng-container matColumnDef="id">
