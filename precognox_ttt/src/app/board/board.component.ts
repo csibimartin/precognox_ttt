@@ -7,10 +7,9 @@ import {Board} from "../api/models/board";
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.css']
 })
-export class BoardComponent implements OnInit{
+export class BoardComponent implements OnInit {
 
-  @Input()
-  board: Board = {
+  _board: Board = {
     id: undefined,
     board: "000000000",
     name: '' + Math.random()
@@ -23,6 +22,15 @@ export class BoardComponent implements OnInit{
 
   ngOnInit() {
     this.calculateWinner();
+  }
+
+  @Input() set board(value: Board) {
+    this._board = value;
+    this.onBoardChanged(this._board);
+  }
+
+  get board(): Board {
+    return this._board;
   }
 
   get size() {
@@ -57,6 +65,13 @@ export class BoardComponent implements OnInit{
       this.isOneNext = !this.isOneNext;
     }
     this.calculateWinner();
+    this.checkStepsLeft();
+  }
+
+  private checkStepsLeft() {
+    if (this.board.board.split('').every(v => v !== '0')) {
+      window.alert('DRAW! No more steps left!');
+    }
   }
 
   calculateWinner() {
@@ -90,5 +105,24 @@ export class BoardComponent implements OnInit{
       this.boardControllerService.createBoard(this.board)
         .subscribe(value => this.board = value);
     }
+  }
+
+  private onBoardChanged(_board: Board) {
+    this.calculateNext();
+    this.calculateWinner();
+    this.checkStepsLeft();
+  }
+
+  private calculateNext() {
+    let ones = 0;
+    let twos = 0;
+    for (let x in this.board.board.split('')) {
+      if (x === '1') {
+        ones++;
+      } else if (x === '2') {
+        twos++;
+      }
+    }
+    this.isOneNext = twos > ones;
   }
 }

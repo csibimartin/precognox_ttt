@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BoardControllerService} from "../api/services/board-controller.service";
 import {BoardWithId} from "../api/models/board-with-id";
+import {Board} from "../api/models/board";
 
 @Component({
   selector: 'boards-list',
@@ -9,15 +10,18 @@ import {BoardWithId} from "../api/models/board-with-id";
 })
 export class BoardsListComponent {
 
-  @Output() viewBoard= new EventEmitter<BoardWithId>();
+  @Output() viewBoard = new EventEmitter<Board>();
   displayedColumns = ['id', 'name', 'board', 'actions'];
   dataSource: any = [];
+  @Input() set activeTab(tab: number) {
+    this.reload();
+  }
 
   constructor(public boardControllerService: BoardControllerService) {
     this.reload();
   }
 
-  private reload() {
+  reload() {
     this.boardControllerService.getBoards()
       .subscribe(c => {
         this.dataSource = c;
@@ -29,6 +33,6 @@ export class BoardsListComponent {
   }
 
   remove(board: BoardWithId) {
-    this.boardControllerService.deleteBoard(board.id).subscribe();
+    this.boardControllerService.deleteBoard(board.id).subscribe(() => this.reload());
   }
 }

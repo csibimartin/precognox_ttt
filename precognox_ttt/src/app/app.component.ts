@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
+import {Board} from "./api/models/board";
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,17 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   selectedTab = 0;
+  board: Board = {
+    id: undefined,
+    board: "000000000",
+    name: '' + Math.random()
+  };
+
+  onBoardSelected(event: Board) {
+    if (!event) {
+      return;
+    }
+    this.board = event;
+    this.selectedTab = 0;
+  }
 }

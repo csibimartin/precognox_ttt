@@ -12,13 +12,13 @@
         <ng-template md-tab-label>
           Play
         </ng-template>
-        <app-board></app-board>
+        <app-board [board]="board"></app-board>
       </mat-tab>
       <mat-tab label="Games">
         <ng-template md-tab-label>
           Games
         </ng-template>
-        <boards-list></boards-list>
+        <boards-list (viewBoard)="onBoardSelected($event)" [activeTab]="selectedTab"></boards-list>
       </mat-tab>
     </mat-tab-group>
   </div>

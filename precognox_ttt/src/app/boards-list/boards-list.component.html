@@ -1,3 +1,8 @@
+<article class="table-header">
+  <button class="button-add-row" mat-button (click)="reload()">
+    <mat-icon>refresh</mat-icon>
+  </button>
+</article>
 <table mat-table [dataSource]="dataSource">
   <ng-container matColumnDef="id">
     <mat-header-cell *matHeaderCellDef>ID</mat-header-cell>
